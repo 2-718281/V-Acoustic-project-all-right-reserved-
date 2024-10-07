@@ -1,5 +1,6 @@
 import numpy as np
-import scipy
+import scipy.io.wavfile as wav
+import scipy.signal as sig
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
@@ -10,18 +11,17 @@ over = 0.5
 fs = 250000
 
 
-fs1, data1 = scipy.io.wavfile.read('HYD1.wav')
-fs2, data2 = scipy.io.wavfile.read('HYD2.wav')
-fs3, data3 = scipy.io.wavfile.read('HYD3.wav')
+fs1, data1 = wav.read('HYD1.wav')
+fs2, data2 = wav.read('HYD2.wav')
+fs3, data3 = wav.read('HYD3.wav')
 
 time1 = np.linspace(0,len(data1)/fs, fs)
 time2 = np.linspace(0,len(data2)/fs, fs)
 time3 = np.linspace(0,len(data3)/fs, fs)
 
 
-# correlation 
-corr12 = scipy.signal.correlate(data1,data2)
-corr23 = scipy.signal.correlate(data2,data3)  
+corr12 = sig.correlate(data1,data2)
+corr23 = sig.correlate(data2,data3)  
 
 plt.plot(corr12)
 plt.plot(corr23)
