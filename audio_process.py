@@ -19,6 +19,7 @@ time2 = np.linspace(0,len(data2)/fs, fs)
 time3 = np.linspace(0,len(data3)/fs, fs)
 
 
+# correlation 
 corr12 = scipy.signal.correlate(data1,data2)
 corr23 = scipy.signal.correlate(data2,data3)  
 
@@ -29,6 +30,8 @@ plt.ylabel('Amplitude')
 
 plt.show()
 
+
+#emd approach
 '''
 imf = emd.sift.sift(data2)
 print(imf.shape)
@@ -46,7 +49,7 @@ emd.plotting.plot_hilberthuang(hht, time2, f,
 '''
 
 
-
+#looking for the peak 
 '''
 fft1 = scipy.fft.fft(data1)
 
