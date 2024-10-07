@@ -1,6 +1,10 @@
 import numpy as np
 import scipy
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+import emd
+
 
 over = 0.5
 fs = 250000
@@ -10,8 +14,40 @@ fs1, data1 = scipy.io.wavfile.read('HYD1.wav')
 fs2, data2 = scipy.io.wavfile.read('HYD2.wav')
 fs3, data3 = scipy.io.wavfile.read('HYD3.wav')
 
-print(fs1,fs2,fs3)
+time1 = np.linspace(0,len(data1)/fs, fs)
+time2 = np.linspace(0,len(data2)/fs, fs)
+time3 = np.linspace(0,len(data3)/fs, fs)
 
+
+corr12 = scipy.signal.correlate(data1,data2)
+corr23 = scipy.signal.correlate(data2,data3)  
+
+plt.plot(corr12)
+plt.plot(corr23)
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude')
+
+plt.show()
+
+'''
+imf = emd.sift.sift(data2)
+print(imf.shape)
+
+IP, IF, IA = emd.spectra.frequency_transform(imf, fs, 'hilbert')
+# Define frequency range (low_freq, high_freq, nsteps, spacing)
+freq_range = (0.1, 10, 80, 'log')
+f, hht = emd.spectra.hilberthuang(IF, IA, freq_range, sum_time=False)
+emd.plotting.plot_imfs(imf)
+
+fig = plt.figure(figsize=(10, 6))
+emd.plotting.plot_hilberthuang(hht, time2, f,
+                               time_lims=(2, 4), freq_lims=(0.1, 15),
+                               fig=fig, log_y=True)
+'''
+
+
+
+'''
 fft1 = scipy.fft.fft(data1)
 
 def normal(data):
@@ -44,9 +80,9 @@ def peak_f_seg_1(peaks,time,normal):
     else:
         print("XD")    
 
-'''def peak_f_seg_2(peaks,time,normal):
+def peak_f_seg_2(peaks,time,normal):
     for i in range(len(peaks)):
-        print(f"Peak at {time[i]} seconds with amplitude {normal[peaks[i]]}")'''
+        print(f"Peak at {time[i]} seconds with amplitude {normal[peaks[i]]}")
 
 def peak_diff(time):
     timediff = np.diff(time)
@@ -73,3 +109,4 @@ plt.xlabel('Time (seconds)')
 plt.ylabel('Amplitude')
 plt.title('Waveform and Detected Peaks')
 plt.show()
+'''
