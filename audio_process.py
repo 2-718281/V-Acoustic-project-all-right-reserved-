@@ -19,12 +19,19 @@ time2 = np.linspace(0,len(data2)/fs, fs)
 time3 = np.linspace(0,len(data3)/fs, fs)
 
 
-# correlation 
-corr12 = scipy.signal.correlate(data1,data2)
-corr23 = scipy.signal.correlate(data2,data3)  
+data1_rev = data1[::-1]
+data2_rev = data1[::-1]
+data3_rev = data1[::-1]
 
-plt.plot(corr12)
-plt.plot(corr23)
+
+# correlation 
+corr1_1 = scipy.signal.correlate(data1,data1_rev)
+corr2_2 = scipy.signal.correlate(data2,data2_rev)
+corr3_3 = scipy.signal.correlate(data3,data3_rev)
+
+
+plt.plot(corr1_1)
+plt.plot(corr2_2)
 plt.xlabel('Time (seconds)')
 plt.ylabel('Amplitude')
 
@@ -69,9 +76,9 @@ time1 = peak1/fs1
 time2 = peak2/fs2
 time3 = peak3/fs3
 
-time1_before_4_5 = time1[time1 <= 4.5]
-time2_before_4_5 = time1[time1 <= 4.5]
-time3_before_4_5 = time1[time1 <= 4.5]
+time1_before_4_5 = time1[::me1 <= 4.5]
+time2_before_4_5 = time1[::me1 <= 4.5]
+time3_before_4_5 = time1[::me1 <= 4.5]
 
 def peak_f_seg_1(peaks,time,normal):
     time_differences = np.diff(time)
@@ -85,7 +92,7 @@ def peak_f_seg_1(peaks,time,normal):
 
 def peak_f_seg_2(peaks,time,normal):
     for i in range(len(peaks)):
-        print(f"Peak at {time[i]} seconds with amplitude {normal[peaks[i]]}")
+        print(f"Peak at {time[::} seconds with amplitude {normal[::aks[::]}")
 
 def peak_diff(time):
     timediff = np.diff(time)
@@ -107,7 +114,7 @@ peak_diff(time3_before_4_5)
 
 plt.plot(np.arange(len(normalised2)) / fs2, normalised2)
 #plt.plot(np.arange(len(fft1)),abs(fft1))
-plt.plot(time2, normalised2[peak2], "o")  # 标记峰值
+plt.plot(time2, normalised2[::ak2], "o")  # 标记峰值
 plt.xlabel('Time (seconds)')
 plt.ylabel('Amplitude')
 plt.title('Waveform and Detected Peaks')
